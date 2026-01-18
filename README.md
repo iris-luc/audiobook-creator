@@ -17,32 +17,40 @@ Tài liệu liên quan: `PRICING.md`, `TEXT_CLEANING.md`, `VOICE_STYLES.md`
 - `ffmpeg` (để encode/merge ra `.m4a`)
 - Google Cloud Project đã bật **Text-to-Speech API**
 
-## Cài đặt
+## Cài đặt & Thiết lập
+
+### 1. Clone & Cài đặt dependencies
 
 ```bash
+git clone https://github.com/iris-luc/audiobook-creator.git
+cd audiobook-creator
 npm install
 ```
 
-## Thiết lập Google Cloud (khuyến nghị)
+### 2. Cấu hình môi trường (`.env`)
 
-1) Tạo Service Account có quyền dùng TTS:
-- Google Cloud Console → IAM & Admin → Service Accounts
-- Gán quyền phù hợp cho TTS (ví dụ: Text-to-Speech User)
-- Tải file JSON key
+Dự án có sẵn file mẫu `.env.example`. Bạn cần tạo file `.env` từ file này:
 
-2) Để file JSON **ngoài repo** (không commit) và trỏ bằng biến môi trường:
-
-`.env` (ví dụ)
 ```bash
-# Backend
-GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/service-account.json
-PORT=3002
-
-# Frontend (Vite)
-VITE_API_BASE_URL=http://localhost:3002
+cp .env.example .env
 ```
 
-Ghi chú: nếu không set `PORT` thì backend mặc định `3001` và frontend cũng sẽ gọi `http://localhost:3001`.
+Sau đó mở file `.env` và cập nhật các thông tin sau:
+- `API_KEY`: Key của Gemini API (dùng để chuyển đổi phương ngữ).
+- `GOOGLE_APPLICATION_CREDENTIALS`: Đường dẫn đến file JSON Service Account của Google Cloud.
+
+### 3. Thiết lập Google Cloud Text-to-Speech
+
+Để sử dụng giọng đọc Google, bạn cần:
+1. Tạo Project trên [Google Cloud Console](https://console.cloud.google.com/).
+2. Bật **Text-to-Speech API**.
+3. Tạo **Service Account**:
+   - Vào IAM & Admin → Service Accounts.
+   - Tạo mới service account, cấp quyền **Cloud Text-to-Speech API User**.
+   - Tạo key (JSON) và tải về máy.
+4. Đổi tên file key thành `service-account-key.json` và chép vào thư mục gốc của dự án (hoặc cập nhật đường dẫn trong `.env`).
+
+> **Lưu ý bảo mật:** File `.env` và `service-account-key.json` đã được thêm vào `.gitignore` để tránh lộ thông tin nhạy cảm khi push code.
 
 ## Chạy ứng dụng
 
