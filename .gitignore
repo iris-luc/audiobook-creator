@@ -4,6 +4,7 @@ cache/
 .env
 .env.local
 .env.*
+!.env.example
 service-account-key.json
 *.json
 !package.json
