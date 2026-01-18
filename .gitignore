@@ -1,0 +1,16 @@
+node_modules/
+dist/
+cache/
+.env
+.env.local
+.env.*
+service-account-key.json
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!manifest.json
+*.log
+.DS_Store
+.idea/
+.vscode/
